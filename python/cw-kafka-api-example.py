@@ -117,6 +117,11 @@ def handle_au(message):
 
     print(''.join(au_list))
 
+    
+def handle_unknown(message):
+    print(f"received message on unhandled queue \"{message.topic}\" :")
+    print(message)
+    
 
 def handle_message(message):
     switcher = {
@@ -131,7 +136,7 @@ def handle_message(message):
         'cw3-yellow_pages': handle_yellow,
         'cw3-au_digest': handle_au,
     }
-    func = switcher.get(message.topic, lambda x: f"No handler for topic {message.topic}")
+    func = switcher.get(message.topic, handle_unknown)
     return func(message)
 
 
